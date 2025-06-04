@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { MapPin, Building2, Clock, BriefcaseIcon, Send, ArrowLeft, Loader2, X } from 'lucide-react';
 import { useStore } from '../store';
-import axios from 'axios';
+import API from '../api';
 
 interface Job {
   _id: string;
@@ -25,8 +25,6 @@ interface ApplicationFormData {
   coverLetter: string;
   resume: string;
 }
-
-const API = axios.create();
 
 function JobDetails() {
   const { id } = useParams();

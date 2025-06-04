@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://job-portal-backend.onrender.com/api',
+  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:7777/api',
 });
 
 // Add a request interceptor to include the token in all requests
