@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Building2, MapPin, Clock, Loader2, CheckCircle2, XCircle, Clock3, AlertCircle } from 'lucide-react';
 import { useStore } from '../store';
-import axios from 'axios';
+import API from '../api';
 import { Application, Job } from '../types';
-
-const API_URL = 'http://localhost:5000';
 
 interface JobApplication extends Omit<Application, 'jobId'> {
   jobId: Job;
@@ -23,20 +21,12 @@ function AppliedJobs() {
     const fetchApplications = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${API_URL}/api/applications/my-applications`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        });
+        const response = await API.get('/applications/my-applications');
         setApplications(response.data);
         setError('');
       } catch (err) {
         console.error('Error fetching applications:', err);
-        if (axios.isAxiosError(err)) {
-          setError(err.response?.data?.error || 'Failed to fetch applications');
-        } else {
-          setError('Failed to fetch applications');
-        }
+        setError('Failed to fetch applications');
       } finally {
         setLoading(false);
       }

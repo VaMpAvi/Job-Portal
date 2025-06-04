@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Send, X, Loader2 } from 'lucide-react';
-import axios from 'axios';
+import API from '../api';
 
 interface ApplicationModalProps {
   jobId: string;
@@ -9,8 +9,6 @@ interface ApplicationModalProps {
   onSuccess: () => void;
   isDarkMode: boolean;
 }
-
-const API_URL = 'http://localhost:5000';
 
 export function ApplicationModal({ jobId, jobTitle, onClose, onSuccess, isDarkMode }: ApplicationModalProps) {
   const [formData, setFormData] = useState({
@@ -26,24 +24,15 @@ export function ApplicationModal({ jobId, jobTitle, onClose, onSuccess, isDarkMo
       setApplying(true);
       setError('');
 
-      await axios.post(
-        `${API_URL}/api/applications/${jobId}`,
-        formData,
-        {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        }
+      await API.post(
+        `/applications/${jobId}`,
+        formData
       );
 
       onSuccess();
       onClose();
     } catch (err: any) {
-      if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.error || 'Failed to submit application');
-      } else {
-        setError('Failed to submit application');
-      }
+      setError(err.response?.data?.error || 'Failed to submit application');
     } finally {
       setApplying(false);
     }

@@ -26,7 +26,7 @@ interface ApplicationFormData {
   resume: string;
 }
 
-const API_URL = 'http://localhost:5000';
+const API = axios.create();
 
 function JobDetails() {
   const { id } = useParams();
@@ -50,16 +50,12 @@ function JobDetails() {
     const fetchJobDetails = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${API_URL}/api/jobs/${id}`);
+        const response = await API.get(`/jobs/${id}`);
         setJob(response.data);
         setError('');
       } catch (err) {
         console.error('Error fetching job details:', err);
-        if (axios.isAxiosError(err)) {
-          setError(err.response?.data?.error || 'Failed to fetch job details');
-        } else {
-          setError('Failed to fetch job details');
-        }
+        setError('Failed to fetch job details');
       } finally {
         setLoading(false);
       }
@@ -93,25 +89,15 @@ function JobDetails() {
       setApplying(true);
       setApplicationError('');
 
-      const response = await axios.post(
-        `${API_URL}/api/applications/${id}`,
-        formData,
-        {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
-          }
-        }
+      await API.post(
+        `/applications/${id}`,
+        formData
       );
 
       setApplicationSuccess(true);
       setShowApplyModal(false);
-      // You might want to show a success message or redirect
     } catch (err) {
-      if (axios.isAxiosError(err)) {
-        setApplicationError(err.response?.data?.error || 'Failed to submit application');
-      } else {
-        setApplicationError('Failed to submit application');
-      }
+      setApplicationError('Failed to submit application');
     } finally {
       setApplying(false);
     }

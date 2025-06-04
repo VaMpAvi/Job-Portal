@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, MapPin, Building2, Clock, Loader2 } from 'lucide-react';
 import { useStore } from '../store';
-import axios from 'axios';
+import API from '../api';
 
 interface Job {
   _id: string;
@@ -24,9 +24,6 @@ interface PaginationInfo {
   pages: number;
   hasMore: boolean;
 }
-
-// Define API URL explicitly
-const API_URL = 'http://localhost:5000';
 
 function Jobs() {
   const isDarkMode = useStore((state) => state.isDarkMode);
@@ -67,22 +64,10 @@ function Jobs() {
       if (location) params.append('location', location);
       if (company) params.append('company', company);
 
-      const url = `${API_URL}/api/jobs?${params}`;
-      console.log('Fetching from URL:', url);
-
-      // Add authorization header if token exists
-      const token = localStorage.getItem('token');
-      const config = token ? {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      } : {};
-
-      const response = await axios.get(url, config);
+      const response = await API.get(`/jobs?${params}`);
       console.log('API Response:', response.data);
 
       if (response.data && Array.isArray(response.data.jobs)) {
-        // Debug log for jobs data
         console.log('Jobs with hasApplied field:', response.data.jobs.map((job: Job) => ({
           title: job.title,
           hasApplied: job.hasApplied
@@ -101,11 +86,7 @@ function Jobs() {
       }
     } catch (err) {
       console.error('Error details:', err);
-      if (axios.isAxiosError(err)) {
-        setError(`Failed to fetch jobs: ${err.response?.data?.error || err.message}`);
-      } else {
-        setError('Failed to fetch jobs. Please try again later.');
-      }
+      setError('Failed to fetch jobs. Please try again later.');
     } finally {
       setLoading(false);
     }
