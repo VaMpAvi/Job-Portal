@@ -1,4 +1,4 @@
-const Job = require('../models/Job');
+const Job = require('../models/job');
 const User = require('../models/User');
 const { sendApplicationConfirmation, sendEmployerNotification } = require('../utils/emailService');
 
