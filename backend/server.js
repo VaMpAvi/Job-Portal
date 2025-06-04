@@ -10,8 +10,18 @@ if (!process.env.JWT_SECRET) {
 
 const app = express();
 
-app.use(cors());
+// Configure CORS
+app.use(cors({
+    origin: ['https://job-portal-frontend.onrender.com', 'http://localhost:5173'],
+    credentials: true
+}));
+
 app.use(express.json());
+
+// Health check endpoint
+app.get('/', (req, res) => {
+    res.json({ status: 'Server is running' });
+});
 
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/jobs', require('./routes/jobRoutes'));
@@ -20,8 +30,9 @@ app.use('/api/applications', require('./routes/applicationRoutes'));
 const startServer = async (port) => {
     try {
         await connectDB();
-        app.listen(port);
-        console.log(`Server running on port ${port}`);
+        app.listen(port, '0.0.0.0', () => {
+            console.log(`Server running on port ${port}`);
+        });
     } catch (err) {
         if (err.code === 'EADDRINUSE') {
             console.log(`Port ${port} is busy, trying ${port + 1}...`);
