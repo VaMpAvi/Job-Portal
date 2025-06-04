@@ -1,5 +1,5 @@
-const Application = require('../models/Application');
-const Job = require('../models/Job');
+const Application = require('../models/application');
+const Job = require('../models/job');
 const User = require('../models/User');
 const mongoose = require('mongoose');
 const { sendAssessmentEmail } = require('../utils/emailService');

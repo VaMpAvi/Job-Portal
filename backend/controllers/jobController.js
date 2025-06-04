@@ -83,7 +83,7 @@ exports.getJobs = async (req, res) => {
 
     // If user is authenticated, check which jobs they've applied to
     if (req.user) {
-      const Application = require('../models/Application');
+      const Application = require('../models/application');
       const userApplications = await Application.find({
         userId: req.user.id
       }).select('jobId').lean();
