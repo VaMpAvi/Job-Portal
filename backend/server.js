@@ -46,13 +46,6 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/jobs', require('./routes/jobRoutes'));
 app.use('/api/applications', require('./routes/applicationRoutes'));
 
-const path = require('path');
-
-app.use(express.static(path.join(__dirname, 'dist'))); // or 'build'
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html')); // or 'build'
-});
 
 
 const startServer = async (port) => {
