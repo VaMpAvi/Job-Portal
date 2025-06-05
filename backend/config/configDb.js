@@ -1,65 +1,50 @@
-const mongoose = require('mongoose');
-const initializeDatabase = require('./dbInit');
-
-const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/JobPortal';
+const mongoose = require("mongoose");
+const initializeDatabase = require("./dbInit");
 
 const connectDB = async () => {
-    try {
-        console.log('Attempting to connect to MongoDB...');
-        
-        // Check if we're using local or Atlas URI
-        const isLocalConnection = !process.env.MONGODB_URI;
-        if (isLocalConnection) {
-            console.error('ERROR: MONGODB_URI environment variable is not set!');
-            console.error('Please ensure you have:');
-            console.error('1. Set the MONGODB_URI in your Render environment variables');
-            console.error('2. Redeployed the application after setting the variable');
-            throw new Error('Missing MONGODB_URI environment variable');
-        }
+  try {
+    console.log("Attempting to connect to MongoDB...");
 
-        // Ensure we're connecting to the JobPortal database
-        const connectionString = process.env.MONGODB_URI 
-            ? `${process.env.MONGODB_URI.includes('/?') 
-                ? process.env.MONGODB_URI.replace('/?', '/JobPortal?')
-                : process.env.MONGODB_URI.replace('?', '/JobPortal?')}`
-            : mongoURI;
+    await mongoose.connect(
+      "mongodb+srv://AvinashBanyal:Aumw46aT0CAJUNIO@cluster0.mt7fdep.mongodb.net/JobPortal?retryWrites=true&w=majority",
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        retryWrites: true,
+        w: "majority",
+        maxPoolSize: 10,
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+      }
+    );
 
-        // Log sanitized connection string for debugging
-        console.log('Connecting to:', connectionString.replace(/\/\/[^@]+@/, '//****:****@'));
-        
-        await mongoose.connect(connectionString, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            retryWrites: true,
-            w: 'majority',
-            maxPoolSize: 10,
-            serverSelectionTimeoutMS: 5000,
-            socketTimeoutMS: 45000,
-        });
-        
-        console.log('MongoDB connected successfully');
-        await initializeDatabase();
-        console.log('Database initialized successfully');
-    } catch (err) {
-        console.error('MongoDB connection error details:');
-        console.error('- Error name:', err.name);
-        console.error('- Error message:', err.message);
-        if (err.reason) console.error('- Reason:', err.reason);
-        
-        // Check if the error is related to authentication
-        if (err.message.includes('Authentication failed')) {
-            console.error('Authentication failed - please check your MongoDB username and password');
-        }
-        
-        // Check if the error is related to network connectivity
-        if (err.message.includes('ECONNREFUSED')) {
-            console.error('Connection refused - this usually means:');
-            console.error('1. The MONGODB_URI environment variable is not being read correctly');
-            console.error('2. Or there might be network connectivity issues');
-        }
-        
-        process.exit(1);
+    console.log("MongoDB connected successfully");
+    await initializeDatabase();
+    console.log("Database initialized successfully");
+  } catch (err) {
+    console.error("MongoDB connection error details:");
+    console.error("- Error name:", err.name);
+    console.error("- Error message:", err.message);
+    if (err.reason) console.error("- Reason:", err.reason);
+
+    // Check if the error is related to authentication
+    if (err.message.includes("Authentication failed")) {
+      console.error(
+        "Authentication failed - please check your MongoDB username and password"
+      );
     }
+
+    // Check if the error is related to network connectivity
+    if (err.message.includes("ECONNREFUSED")) {
+      console.error("Connection refused - this usually means:");
+      console.error(
+        "1. The MONGODB_URI environment variable is not being read correctly"
+      );
+      console.error("2. Or there might be network connectivity issues");
+    }
+
+    process.exit(1);
+  }
 };
 
 module.exports = connectDB;
