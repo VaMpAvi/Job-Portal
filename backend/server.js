@@ -10,18 +10,22 @@ if (!process.env.JWT_SECRET) {
 }
 
 // Log environment details (without sensitive info)
-console.log('Environment:', {
+console.log('Environment variables check:', {
     NODE_ENV: process.env.NODE_ENV,
     PORT: process.env.PORT,
-    MONGODB_URI: process.env.MONGODB_URI ? 'Set' : 'Not Set',
-    JWT_SECRET: 'Set'
+    MONGODB_URI: process.env.MONGODB_URI 
+        ? process.env.MONGODB_URI.replace(/\/\/[^@]+@/, '//****:****@') 
+        : 'Not Set (This is the issue - check your environment variables)',
+    JWT_SECRET: process.env.JWT_SECRET ? 'Set' : 'Not Set',
+    CURRENT_WORKING_DIRECTORY: process.cwd(),
+    ENV_KEYS_AVAILABLE: Object.keys(process.env)
 });
 
 const app = express();
 
 // Configure CORS
 app.use(cors({
-    origin: ['https://job-portal-frontend.onrender.com', 'http://localhost:3000'],
+    origin: ['https://job-portal-front-end-yu2i.onrender.com', 'http://localhost:3000'],
     credentials: true
 }));
 
@@ -45,7 +49,7 @@ app.use('/api/applications', require('./routes/applicationRoutes'));
 const startServer = async (port) => {
     try {
         console.log('Starting server initialization...');
-        await connectDB();
+        connectDB();
         
         app.listen(port, '0.0.0.0', () => {
             console.log(`Server running on port ${port}`);
