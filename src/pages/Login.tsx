@@ -71,7 +71,7 @@ function Login() {
         )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">Email</label>
+            <label className="block text-sm font-medium mb-2">Email *</label>
             <input
               type="email"
               value={email}
@@ -83,7 +83,7 @@ function Login() {
             />
           </div>
           <div className="mb-6">
-            <label className="block text-sm font-medium mb-2">Password</label>
+            <label className="block text-sm font-medium mb-2">Password *</label>
             <input
               type="password"
               value={password}

@@ -36,7 +36,7 @@ function Register() {
         <h1 className="text-2xl font-bold text-center mb-8">Create Account</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">Full Name</label>
+            <label className="block text-sm font-medium mb-2">Full Name *</label>
             <input
               type="text"
               value={formData.name}
@@ -46,7 +46,7 @@ function Register() {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">Email</label>
+            <label className="block text-sm font-medium mb-2">Email *</label>
             <input
               type="email"
               value={formData.email}
@@ -56,7 +56,7 @@ function Register() {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">Password</label>
+            <label className="block text-sm font-medium mb-2">Password *</label>
             <input
               type="password"
               value={formData.password}
@@ -66,7 +66,7 @@ function Register() {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">Account Type</label>
+            <label className="block text-sm font-medium mb-2">Account Type *</label>
             <select
               value={formData.role}
               onChange={(e) => setFormData({ ...formData, role: e.target.value })}
@@ -78,7 +78,7 @@ function Register() {
           </div>
           {formData.role === 'employer' && (
             <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">Company Name</label>
+              <label className="block text-sm font-medium mb-2">Company Name *</label>
               <input
                 type="text"
                 value={formData.company}

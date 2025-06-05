@@ -64,7 +64,7 @@ function CreateJob() {
     if (!currentUser?.company) {
       return (
         <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">Company Name</label>
+          <label className="block text-sm font-medium mb-2">Company Name *</label>
           <input
             type="text"
             value={formData.company}
@@ -91,7 +91,7 @@ function CreateJob() {
         )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">Job Title</label>
+            <label className="block text-sm font-medium mb-2">Job Title *</label>
             <input
               type="text"
               value={formData.title}
@@ -106,7 +106,7 @@ function CreateJob() {
           {renderCompanyField()}
 
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">Location</label>
+            <label className="block text-sm font-medium mb-2">Location *</label>
             <input
               type="text"
               value={formData.location}
@@ -119,7 +119,7 @@ function CreateJob() {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">Description</label>
+            <label className="block text-sm font-medium mb-2">Description *</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -132,7 +132,7 @@ function CreateJob() {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">Requirements</label>
+            <label className="block text-sm font-medium mb-2">Requirements *</label>
             <textarea
               value={formData.requirements}
               onChange={(e) => setFormData({ ...formData, requirements: e.target.value })}
@@ -145,7 +145,7 @@ function CreateJob() {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">Salary</label>
+            <label className="block text-sm font-medium mb-2">Salary *</label>
             <input
               type="text"
               value={formData.salary}
@@ -158,7 +158,7 @@ function CreateJob() {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium mb-2">Job Type</label>
+            <label className="block text-sm font-medium mb-2">Job Type *</label>
             <select
               value={formData.type}
               onChange={(e) => setFormData({ ...formData, type: e.target.value })}

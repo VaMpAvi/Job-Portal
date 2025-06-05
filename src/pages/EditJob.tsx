@@ -119,7 +119,7 @@ function EditJob() {
       <form onSubmit={handleSubmit} className="max-w-2xl mx-auto">
         <div className="space-y-6">
           <div>
-            <label className="block text-sm font-medium mb-2">Job Title</label>
+            <label className="block text-sm font-medium mb-2">Job Title *</label>
             <input
               type="text"
               value={formData.title}
@@ -132,7 +132,7 @@ function EditJob() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Description</label>
+            <label className="block text-sm font-medium mb-2">Description *</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -145,7 +145,7 @@ function EditJob() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Location</label>
+            <label className="block text-sm font-medium mb-2">Location *</label>
             <input
               type="text"
               value={formData.location}
@@ -158,7 +158,7 @@ function EditJob() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Salary</label>
+            <label className="block text-sm font-medium mb-2">Salary *</label>
             <input
               type="text"
               value={formData.salary}
@@ -171,7 +171,7 @@ function EditJob() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Status</label>
+            <label className="block text-sm font-medium mb-2">Status *</label>
             <select
               value={formData.status}
               onChange={(e) => setFormData({ ...formData, status: e.target.value as 'active' | 'closed' | 'draft' })}
